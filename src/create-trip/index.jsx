@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { selectBudgetList, selectTravellerList } from '@/constants/options';
+import { AI_PROMPT, selectBudgetList, selectTravellerList } from '@/constants/options';
+import { chatSession } from '@/service/AIModel';
 import React, { useEffect, useState } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import { toast } from 'sonner';
 
 function CreateTrip() {
   const [place, setPlace] = useState();
@@ -18,6 +20,23 @@ function CreateTrip() {
     console.log(formData);
   }, [formData])
 
+  const OnGenerateTrip = async() => {
+    if (formData?.numDays > 5 || !formData?.location || !formData?.numTravellers || !formData?.budget) {
+      toast('Please provide all details to generate trip');
+      return ;
+    }
+    const FINAL_PROMPT = AI_PROMPT
+    .replace('{location}', formData?.location?.label)
+    .replace('{numDays}', formData?.numDays)
+    .replace('{numTravellers}', formData?.numTravellers)
+    .replace('{budget}', formData?.budget)
+    .replace('{numsDays}', formData?.numDays)
+
+    console.log(FINAL_PROMPT);
+    const result = await chatSession.sendMessage(FINAL_PROMPT);
+    console.log(result?.response?.text());
+  }
+
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10 px-5 mt-10'>
       <h2 className='font-bold text-3xl'>Tell us your preferences to get started! 🗺️</h2>
@@ -27,7 +46,7 @@ function CreateTrip() {
         <div>
           <h2 className='text-xl my-3 font-medium text-sky-700'>Where do you want to travel to?</h2>
           <GooglePlacesAutocomplete 
-            apiKey='AIzaSyC-u6V6eq5ua1q2nTaGdo17wOQklwefbmk' 
+            apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
             selectProps={{
               place,
               onChange: (v) => {setPlace(v); handleInputChange('location', v)}
@@ -46,7 +65,9 @@ function CreateTrip() {
             {selectBudgetList.map((item, index) => (
               <div 
                 key={index} 
-                className='p-4 border rounded-lg hover:shadow-lg cursor-pointer'
+                className={`p-4 border rounded-lg hover:shadow-lg cursor-pointer
+                  ${formData?.budget==item.title&&'shadow-lg border-sky-950'}
+                  `}
                 onClick={() => handleInputChange('budget', item.title)}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>
@@ -64,7 +85,9 @@ function CreateTrip() {
             {selectTravellerList.map((item, index) => (
               <div 
                 key={index} 
-                className='p-4 border rounded-lg hover:shadow-lg cursor-pointer'
+                className={`p-4 border rounded-lg hover:shadow-lg cursor-pointer
+                  ${formData?.numTravellers==item.people&&'shadow-lg border-sky-950'}
+                  `}
                 onClick={() => handleInputChange('numTravellers', item.people)}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>
@@ -78,7 +101,7 @@ function CreateTrip() {
       </div>
 
       <div className='my-10 justify-end flex'>
-        <Button>Generate Trip</Button>
+        <Button onClick={OnGenerateTrip}>Generate Trip</Button>
       </div>
 
     </div>

@@ -8,7 +8,7 @@ export const selectTravellerList= [
     },
     {
         id: 2,
-        title: 'Lover',
+        title: 'Couple',
         desc: 'Ideal for romantic escapes and special moments together.',
         icon: '👩🏻‍❤️‍👨🏻',
         people: '2 people'
@@ -50,4 +50,4 @@ export const selectBudgetList = [
     },
 ]
 
-export const AI_PROMPT = 'Generate travel plans for location: {location}'
+export const AI_PROMPT = "Generate travel plans for the location {location} for {numDays} days for {numTravellers} with a {budget} budget. Give me a hotel options list with the hotel's name, address, price, image URL, geo coordinates, rating, descriptions, and suggested itinerary with placeName, placeDetails, place image URL, geo coordinates, ticket pricing, rating. Time travel each of the location for {numsDays} days with each day plan and best time to visit in JSON format"
