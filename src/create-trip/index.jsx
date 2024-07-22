@@ -5,10 +5,23 @@ import { chatSession } from '@/service/AIModel';
 import React, { useEffect, useState } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+
 
 function CreateTrip() {
   const [place, setPlace] = useState();
   const [formData, setFormData] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const handleInputChange = (name, value) => {
     setFormData({
       ...formData,
@@ -20,7 +33,19 @@ function CreateTrip() {
     console.log(formData);
   }, [formData])
 
+  const login = useGoogleLogin({
+    onSuccess: (codeResp) => getUserProfile(codeResp),
+    onError: (error) => console.log(error)
+  })
+
   const OnGenerateTrip = async() => {
+    const user = localStorage.getItem('user');
+
+    if (!user) {
+      setOpenDialog(true);
+      return ;
+    }
+
     if (formData?.numDays > 5 || !formData?.location || !formData?.numTravellers || !formData?.budget) {
       toast('Please provide all details to generate trip');
       return ;
@@ -35,6 +60,20 @@ function CreateTrip() {
     console.log(FINAL_PROMPT);
     const result = await chatSession.sendMessage(FINAL_PROMPT);
     console.log(result?.response?.text());
+  }
+
+  const getUserProfile = (tokenInfo) => {
+    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
+      headers: {
+        Authorization: `Bearer ${tokenInfo?.access_token}`,
+        Accept: 'Application/json'
+      }
+    }).then((resp) => {
+      console.log(resp);
+      localStorage.setItem('user', JSON.stringify(resp.data));
+      setOpenDialog(false);
+      OnGenerateTrip();
+    })
   }
 
   return (
@@ -103,6 +142,23 @@ function CreateTrip() {
       <div className='my-10 justify-end flex'>
         <Button onClick={OnGenerateTrip}>Generate Trip</Button>
       </div>
+
+      <Dialog open={openDialog}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogDescription>
+          <div className='flex'>
+            <img src='/logo.svg' className='w-10'/>
+            <div className='font-bold text-sky-700 content-center text-2xl ml-1'>hopdrift</div>
+        </div>
+        <h2 className='font-bold text-lg mt-7'>Sign in with Google</h2>
+        <p>Robust and secure authentication with Google Auth</p>
+        <Button className="w-full mt-5" onClick={login}> <FcGoogle className='mr-1'/> Sign in with Google</Button>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+
 
     </div>
   )
