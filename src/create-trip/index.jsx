@@ -46,35 +46,41 @@ function CreateTrip() {
   })
 
   const OnGenerateTrip = async() => {
-    const user = localStorage.getItem('user');
-
-    if (!user) {
-      setOpenDialog(true);
-      return ;
+    try {
+      
+        const user = localStorage.getItem('user');
+    
+        if (!user) {
+          setOpenDialog(true);
+          return ;
+        }
+    
+        if (!formData?.numDays || !formData?.location || !formData?.numTravellers || !formData?.budget) {
+          toast('Please provide all details to generate trip');
+          return ;
+        }
+    
+        if (formData?.numDays < 0 || formData?.numDays > 365) {
+          toast('Please provide a valid number of days (0-365)')
+          return ;
+        }
+        setLoading(true);
+        const FINAL_PROMPT = AI_PROMPT
+        .replace('{location}', formData?.location?.label)
+        .replace('{numDays}', formData?.numDays)
+        .replace('{numTravellers}', formData?.numTravellers)
+        .replace('{budget}', formData?.budget)
+        .replace('{numsDays}', formData?.numDays)
+    
+        // console.log(FINAL_PROMPT);
+        const result = await chatSession.sendMessage(FINAL_PROMPT);
+        console.log('---',result?.response?.text());
+        setLoading(false);
+        saveAiTrip(result?.response?.text());
+    } catch (error) {
+      console.log(error);
+      
     }
-
-    if (!formData?.numDays || !formData?.location || !formData?.numTravellers || !formData?.budget) {
-      toast('Please provide all details to generate trip');
-      return ;
-    }
-
-    if (formData?.numDays < 0 || formData?.numDays > 365) {
-      toast('Please provide a valid number of days (0-365)')
-      return ;
-    }
-    setLoading(true);
-    const FINAL_PROMPT = AI_PROMPT
-    .replace('{location}', formData?.location?.label)
-    .replace('{numDays}', formData?.numDays)
-    .replace('{numTravellers}', formData?.numTravellers)
-    .replace('{budget}', formData?.budget)
-    .replace('{numsDays}', formData?.numDays)
-
-    // console.log(FINAL_PROMPT);
-    const result = await chatSession.sendMessage(FINAL_PROMPT);
-    console.log('---',result?.response?.text());
-    setLoading(false);
-    saveAiTrip(result?.response?.text());
   }
 
   const saveAiTrip = async(TripData) => {
