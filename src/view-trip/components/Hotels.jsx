@@ -12,7 +12,7 @@ function Hotels({ trip }) {
                         <img src='/hotel.jpg' className='rounded-xl'/>
                         <div className='my-2 flex flex-col gap-2'>
                             <h2 className='font-medium text-sky-700'>
-                                {hotel?.name}
+                                {hotel?.hotelName}
                             </h2>
                             <h2 className='text-xs'>
                             🏢 {hotel?.address}
