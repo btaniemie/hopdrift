@@ -21,7 +21,7 @@ function Hotels({ trip }) {
                             💳 {hotel?.price}
                             </h2>
                             <h2 className='text-xs'>
-                            🌟 {hotel?.rating}
+                            ⭐ {hotel?.rating}
                             </h2>
                             <h2 className='text-xs text-gray-500'>
                              {hotel?.description}
