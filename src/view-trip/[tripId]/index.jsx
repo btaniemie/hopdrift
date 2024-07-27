@@ -38,7 +38,9 @@ function ViewTrip() {
         {/* itinerary */}
             <Itinerary trip={trip} />
         {/* footer */}
+        <div className='mt-20'>
             <Footer trip={trip}/>
+        </div>
     </div>
   )
 }
