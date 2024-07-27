@@ -47,14 +47,19 @@ function Header() {
   }, [])
   return (
     <div className='w-screen p-3 shadow-sm flex justify-between items-center px-5'>
-      <div className='flex'>
-        <img src='/logo.svg' className='w-10'/>
-        <div className='font-bold text-sky-700 content-center text-2xl ml-1'>hopdrift</div>
-      </div>
+      <a href='/'>
+        <div className='flex'>
+          <img src='/logo.svg' className='w-10'/>
+          <div className='font-bold text-sky-700 content-center text-2xl ml-1'>hopdrift</div>
+        </div>
+      </a>
 
       <div>
         {user?
         <div className='flex items-center gap-5'>
+          <a href='/create-trip'>
+            <Button variant="outline" className="rounded-full">Generate trip</Button>
+          </a>
           <a href='/my-trips'>
             <Button variant="outline" className="rounded-full">My trips</Button>
           </a>
