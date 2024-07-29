@@ -113,7 +113,7 @@ function CreateTrip() {
   }
 
   return (
-    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10 px-5 mt-10'>
+    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 xl:ml-28 mt-10'>
       <h2 className='font-bold text-3xl'>Tell us your preferences to get started! 🗺️</h2>
       <p className='mt-3 text-gray-500 text-xl'>Share some basic details, and we'll handle the rest.</p>
 
@@ -201,7 +201,7 @@ function CreateTrip() {
       </DialogContent>
     </Dialog>
     
-    <Footer />
+    <h2 className='text-center text-gray-500 mb-10'>🛠️ Built by Minh Le</h2>
     </div>
   )
 }
