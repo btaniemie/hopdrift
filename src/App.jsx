@@ -10,7 +10,6 @@ function App() {
   return (
     <div>
       <Hero />
-      <Footer />
     </div>
   )
 }

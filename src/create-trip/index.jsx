@@ -112,14 +112,16 @@ function CreateTrip() {
     })
   }
 
+   // className='sm:px-10 md:px-32 lg:px-56 xl:px-72 xl:ml-28 mt-10'
+   // className='flex flex-col items-center w-screen gap-9'
   return (
-    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 xl:ml-28 mt-10'>
+    <div className='flex flex-col items-center w-screen mt-10'>
       <h2 className='font-bold text-3xl'>Tell us your preferences to get started! 🗺️</h2>
       <p className='mt-3 text-gray-500 text-xl'>Share some basic details, and we'll handle the rest.</p>
 
       <div className='mt-20 flex flex-col gap-9'>
         <div>
-          <h2 className='text-xl my-3 font-medium text-sky-700'>Where do you want to travel to?</h2>
+          <h2 className='text-xl my-3 font-medium text-sky-700 ml-5'>Where do you want to travel to?</h2>
           <GooglePlacesAutocomplete 
             apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
             selectProps={{
@@ -130,12 +132,12 @@ function CreateTrip() {
         </div >
         
         <div>
-          <h2 className='text-xl my-3 font-medium text-sky-700'>How many days do you plan on staying?</h2>
+          <h2 className='text-xl my-3 font-medium text-sky-700 ml-5'>How many days do you plan on staying?</h2>
           <Input placeholder={'Ex: 5'} type="number" onChange = {(e) => handleInputChange('numDays', e.target.value)} />
         </div>
 
         <div>
-          <h2 className='text-xl my-3 font-medium text-sky-700'>What type of budget are you planning for your trip?</h2>
+          <h2 className='text-xl my-3 font-medium text-sky-700 ml-5'>What type of budget are you planning for your trip?</h2>
           <div className='grid grid-cols-3 gap-5 mt-5'>
             {selectBudgetList.map((item, index) => (
               <div 
@@ -155,7 +157,7 @@ function CreateTrip() {
         </div>
 
         <div>
-          <h2 className='text-xl my-3 font-medium text-sky-700'>Who will you be traveling with?</h2>
+          <h2 className='text-xl my-3 font-medium text-sky-700 ml-3'>Who will you be traveling with?</h2>
           <div className='grid grid-cols-3 gap-5 mt-5'>
             {selectTravellerList.map((item, index) => (
               <div 

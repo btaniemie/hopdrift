@@ -12,6 +12,7 @@ function Hero() {
       </Link>
 
       <img src='/landing.png' className='w-4/5 shadow-xl mt-19 mb-6 rounded-2xl'/>
+      <h2 className='text-center text-gray-500 mb-10'>🛠️ Built by Minh Le</h2>
     </div>
   )
 }

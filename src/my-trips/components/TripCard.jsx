@@ -24,7 +24,7 @@ function TripCard({ past }) {
     }
   return (
     <Link to={'/view-trip/'+past?.id}>
-        <div className='xl:ml-28 mb-5 hover:scale-105 transition-all'>
+        <div className='mb-5 hover:scale-105 transition-all'>
             <img src={photoUrl} className='h-[330px] w-full object-cover rounded-xl'/>
             <div className='text-center mt-8'>
                 <h2 className='font-semibold text-lg text-sky-700'>{past?.userSelection?.location?.label}</h2>
