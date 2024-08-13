@@ -9,7 +9,7 @@ This full-stack web application is designed to take the hassle out of planning t
 * **APIs**: Gemini AI, Google Maps API
 * **Deployment**: Vercel
 
-# 🏁 Getting Started
+# 🔎 Getting Started
 
 1. **Sign Up/Login**: Create an account or log in to start planning your trip.
 2. **Set Preferences**: Enter your trip details including location, duration, budget, and the number of travelers.
