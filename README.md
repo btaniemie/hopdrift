@@ -6,7 +6,7 @@ This full-stack web application is designed to take the hassle out of planning t
 
 * **Frontend**: React, Tailwind CSS
 * **Backend**: Firebase
-* **APIs**: Gemini AI, Google Maps API
+* **APIs**: Gemini AI, Google Maps 
 * **Deployment**: Vercel
 
 # 🔎 Getting Started
